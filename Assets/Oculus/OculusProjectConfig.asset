@@ -17,18 +17,18 @@ MonoBehaviour:
   handTrackingSupport: 1
   handTrackingFrequency: 0
   handTrackingVersion: 0
-  anchorSupport: 0
-  renderModelSupport: 0
-  trackedKeyboardSupport: 0
+  anchorSupport: 1
+  renderModelSupport: 1
+  trackedKeyboardSupport: 1
   bodyTrackingSupport: 0
   faceTrackingSupport: 0
-  eyeTrackingSupport: 0
+  eyeTrackingSupport: 1
   disableBackups: 1
   enableNSCConfig: 1
   securityXmlPath: 
   skipUnneededShaders: 0
   focusAware: 1
   requiresSystemKeyboard: 0
-  experimentalFeaturesEnabled: 0
+  experimentalFeaturesEnabled: 1
   insightPassthroughEnabled: 1
   systemSplashScreen: {fileID: 0}

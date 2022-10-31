@@ -877,11 +877,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: 6a901c59-2d24-4e2f-875f-b184668c5ceb
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Liminal Space Demo
+  organizationId: billykwok
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
