@@ -1,8 +1,8 @@
 [*]
 charset = utf-8
 end_of_line = lf
-trim_trailing_whitespace = false
-insert_final_newline = false
+trim_trailing_whitespace = true
+insert_final_newline = true
 indent_style = space
 indent_size = 4
 
@@ -70,6 +70,12 @@ dotnet_naming_rule.unity_serialized_field_rule_4.resharper_guid = 5f0fdb63-c892-
 dotnet_naming_rule.unity_serialized_field_rule_4.severity = warning
 dotnet_naming_rule.unity_serialized_field_rule_4.style = lower_camel_case_style
 dotnet_naming_rule.unity_serialized_field_rule_4.symbols = unity_serialized_field_symbols_4
+dotnet_naming_rule.unity_serialized_field_rule_5.import_to_resharper = True
+dotnet_naming_rule.unity_serialized_field_rule_5.resharper_description = Unity serialized field
+dotnet_naming_rule.unity_serialized_field_rule_5.resharper_guid = 5f0fdb63-c892-4d2c-9324-15c80b22a7ef
+dotnet_naming_rule.unity_serialized_field_rule_5.severity = warning
+dotnet_naming_rule.unity_serialized_field_rule_5.style = lower_camel_case_style
+dotnet_naming_rule.unity_serialized_field_rule_5.symbols = unity_serialized_field_symbols_5
 dotnet_naming_style.all_upper_style.capitalization = all_upper
 dotnet_naming_style.all_upper_style.word_separator = _
 dotnet_naming_style.lower_camel_case_style.capitalization = camel_case
@@ -110,6 +116,10 @@ dotnet_naming_symbols.unity_serialized_field_symbols_4.applicable_accessibilitie
 dotnet_naming_symbols.unity_serialized_field_symbols_4.applicable_kinds =
 dotnet_naming_symbols.unity_serialized_field_symbols_4.resharper_applicable_kinds = unity_serialised_field
 dotnet_naming_symbols.unity_serialized_field_symbols_4.resharper_required_modifiers = instance
+dotnet_naming_symbols.unity_serialized_field_symbols_5.applicable_accessibilities = *
+dotnet_naming_symbols.unity_serialized_field_symbols_5.applicable_kinds =
+dotnet_naming_symbols.unity_serialized_field_symbols_5.resharper_applicable_kinds = unity_serialised_field
+dotnet_naming_symbols.unity_serialized_field_symbols_5.resharper_required_modifiers = instance
 dotnet_style_parentheses_in_arithmetic_binary_operators = never_if_unnecessary:none
 dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:none
 dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:none
@@ -194,8 +204,8 @@ tab_width = 4
 
 [*.shader]
 indent_style = space
-indent_size = 4
-tab_width = 4
+indent_size = 2
+tab_width = 2
 
 [*.{appxmanifest,asax,ascx,aspx,axaml,build,c,c++,cc,cginc,compute,cp,cpp,cs,cshtml,cu,cuh,cxx,dtd,fs,fsi,fsscript,fsx,fx,fxh,h,hh,hlsl,hlsli,hlslinc,hpp,hxx,inc,inl,ino,ipp,ixx,master,ml,mli,mpp,mq4,mq5,mqh,nuspec,paml,razor,resw,resx,skin,tpp,usf,ush,vb,xaml,xamlx,xoml,xsd}]
 indent_style = space

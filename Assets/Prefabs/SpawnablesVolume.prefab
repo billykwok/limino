@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomLight: {fileID: 4058753717224557943, guid: d5b353c4c9ee477cb074f3f67d32b02c,
     type: 3}
-  dynamicObjects:
+  spawnables:
   - resizable: {fileID: 591023979781238329, guid: 9efab75ee66f4ad199145ddd3688bb22,
       type: 3}
     classificationLabel: FLOOR
