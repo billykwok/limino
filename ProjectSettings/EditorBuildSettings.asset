@@ -11,6 +11,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/App.unity
     guid: 17d63100beb1b4c1992fd2b57d3f995a
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/SceneManager.unity
+    guid: d9d629a01189e9744a9347a18243afd9
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/SpatialAnchor.unity
+    guid: 1db179c458352bf46beb307fd047d589
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/Passthrough.unity
+    guid: 58e5fc2486c774a4e88ac76261268d52
+  - enabled: 0
+    path: Assets/Oculus/Interaction/Samples/Scenes/Examples/HandGrabUseExamples.unity
+    guid: 509f8fa80c708b343a603a4771d35c85
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/SceneManager/Scenes/VirtualFurniture.unity
+    guid: 4977c9139e37ed74c8fc8f818aeb9515
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a41413b9a3bbf4aa78a9ad2ff5946309,
       type: 2}

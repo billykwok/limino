@@ -1,5 +1,5 @@
 ﻿// clang-format off
-Shader "Universal Render Pipeline/Unlit/HiddenObject" {
+Shader "Universal Render Pipeline/UnlitHiddenObject" {
     Properties {
         _Color("Color", Color) = (1,1,1,1)
     }

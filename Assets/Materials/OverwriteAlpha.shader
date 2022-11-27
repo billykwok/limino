@@ -1,5 +1,5 @@
 ﻿// clang-format off
-Shader "Universal Render Pipeline/Unlit/OverwriteAlpha" {
+Shader "Universal Render Pipeline/UnlitOverwriteAlpha" {
     Properties {
         _Alpha("Alpha", Range (0.0, 1.0)) = 0.0
     }
