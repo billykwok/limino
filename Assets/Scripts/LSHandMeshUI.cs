@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-// low-effort way to get a UI
 public class LSHandMeshUI : MonoBehaviour {
     public SphereCollider[] knobs;
     public TextMesh[] readouts;
 
-    int rightHeldKnob = -1;
-    int leftHeldKnob = -1;
+    private int rightHeldKnob = -1;
+    private int leftHeldKnob = -1;
 
     public OVRSkeleton leftHand;
     public OVRSkeleton rightHand;

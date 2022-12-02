@@ -52,7 +52,7 @@ public class LSSpawnable : ISerializationCallbackReceiver {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(LSSpawnable))]
-internal class DynamicObjectEditor : PropertyDrawer {
+internal class LSSpawnableEditor : PropertyDrawer {
     private static readonly string[] classificationList = OVRSceneManager.Classification.List.ToArray();
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {

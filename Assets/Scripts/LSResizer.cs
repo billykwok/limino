@@ -21,9 +21,8 @@ public class LSResizer {
         mf.sharedMesh.RecalculateBounds();
 
         // child it after creation so the bounds math plays nicely
-        prefab.transform.parent = parent.transform;
-        prefab.transform.localPosition = Vector3.zero;
-        prefab.transform.localRotation = Quaternion.identity;
+        prefab.transform.SetParent(parent.transform);
+        prefab.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         // cleanup
         Object.Destroy(resizable);

@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(OVRSceneAnchor))]
 [DefaultExecutionOrder(30)]
 public class LSFurnitureSpawner : MonoBehaviour {
-    private static GameObject _roomLightRef;
+    private static readonly LSResizer resizer = new();
+    private static readonly IReadOnlyList<string> volumeFromTopPlane = new List<string> {
+        OVRSceneManager.Classification.Desk,
+        OVRSceneManager.Classification.Couch
+    };
+    private static readonly IReadOnlyList<string> planeOnly = new List<string> {
+        OVRSceneManager.Classification.WallFace,
+        OVRSceneManager.Classification.Ceiling,
+        OVRSceneManager.Classification.Floor
+    };
 
-    public GameObject roomLight;
     public List<LSSpawnable> spawnables;
 
     private OVRSemanticClassification _classification;
@@ -16,31 +25,36 @@ public class LSFurnitureSpawner : MonoBehaviour {
     private void Start() {
         _sceneAnchor = GetComponent<OVRSceneAnchor>();
         _classification = GetComponent<OVRSemanticClassification>();
-        AddRoomLight();
-        SpawnDynamicObject();
+        SpawnSpawnable();
     }
 
-    private void SpawnDynamicObject() {
-        if (!FindValidDynamicObject(out var currentDynamicObject)) {
+    private void SpawnSpawnable() {
+        if (!FindValidSpawnable(out var currentSpawnable)) {
             return;
         }
 
         // Get current anchor's information
-        var position = transform.position;
-        var rotation = transform.rotation;
+        var clonedTransform = transform;
+        var position = clonedTransform.position;
+        var rotation = clonedTransform.rotation;
+        Debug.Log("Classification: " + string.Join("",
+            _classification.Labels
+                .Select(i => i.ToString())
+                .ToArray()));
+
+        var volume = _sceneAnchor.GetComponent<OVRSceneVolume>();
+        Debug.Log("Volume: " + volume);
+        var dimensions = volume ? volume.Dimensions : Vector3.one;
 
         var plane = _sceneAnchor.GetComponent<OVRScenePlane>();
-        var volume = _sceneAnchor.GetComponent<OVRSceneVolume>();
-
-        var dimensions = volume ? volume.Dimensions : Vector3.one;
+        Debug.Log("Plane: " + plane);
 
         if (_classification && plane) {
             dimensions = plane.Dimensions;
             dimensions.z = 1;
 
             // Special case 01: Has only top plane
-            if (_classification.Contains(OVRSceneManager.Classification.Desk) ||
-                _classification.Contains(OVRSceneManager.Classification.Couch)) {
+            if (_classification.Labels.Any(volumeFromTopPlane.Contains)) {
                 GetVolumeFromTopPlane(
                     transform,
                     plane.Dimensions,
@@ -56,53 +70,37 @@ public class LSFurnitureSpawner : MonoBehaviour {
             }
 
             // Special case 02: Set wall thickness to something small instead of default value (1.0m)
-            if (_classification.Contains(OVRSceneManager.Classification.WallFace) ||
-                _classification.Contains(OVRSceneManager.Classification.Ceiling) ||
-                _classification.Contains(OVRSceneManager.Classification.Floor)) {
+            if (_classification.Labels.Any(planeOnly.Contains)) {
                 dimensions.z = 0.01f;
             }
         }
 
-        var root = new GameObject("Root");
-        root.transform.parent = transform;
-        root.transform.SetPositionAndRotation(position, rotation);
-
-        var resizer = new LSResizer();
-        resizer.CreateResizedObject(dimensions, root, currentDynamicObject.resizable);
+        resizer.CreateResizedObject(
+            dimensions,
+            new GameObject("Root") {
+                transform = {
+                    parent = transform,
+                    position = position,
+                    rotation = rotation
+                }
+            },
+            currentSpawnable.resizable
+        );
     }
 
-    private bool FindValidDynamicObject(out LSSpawnable currentLsSpawnable) {
-        currentLsSpawnable = null;
+    private bool FindValidSpawnable(out LSSpawnable currentSpawnable) {
+        currentSpawnable = null;
 
-        if (!_classification) {
+        if (!_classification || !FindObjectOfType<OVRSceneManager>()) {
             return false;
         }
 
-        var sceneManager = FindObjectOfType<OVRSceneManager>();
-        if (!sceneManager) {
-            return false;
-        }
-
-        foreach (var dynamicObject in spawnables) {
-            if (_classification.Contains(dynamicObject.classificationLabel)) {
-                currentLsSpawnable = dynamicObject;
-                return true;
-            }
+        foreach (var spawnable in spawnables.Where(it => _classification.Contains(it.classificationLabel))) {
+            currentSpawnable = spawnable;
+            return true;
         }
 
         return false;
-    }
-
-    private void AddRoomLight() {
-        if (!roomLight) {
-            return;
-        }
-
-        if (_classification &&
-            _classification.Contains(OVRSceneManager.Classification.Ceiling) &&
-            !_roomLightRef) {
-            _roomLightRef = Instantiate(roomLight, _sceneAnchor.transform);
-        }
     }
 
     private static void GetVolumeFromTopPlane(
@@ -112,9 +110,8 @@ public class LSFurnitureSpawner : MonoBehaviour {
         out Vector3 position,
         out Quaternion rotation,
         out Vector3 localScale) {
-        var halfHeight = height / 2.0f;
-        position = plane.position - Vector3.up * halfHeight;
+        position = plane.position - Vector3.up * height * 0.5f;
         rotation = Quaternion.LookRotation(-plane.up, Vector3.up);
-        localScale = new Vector3(dimensions.x, halfHeight * 2.0f, dimensions.y);
+        localScale = new Vector3(dimensions.x, height, dimensions.y);
     }
 }

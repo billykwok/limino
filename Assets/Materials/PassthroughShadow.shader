@@ -1,5 +1,5 @@
 ﻿//clang-format off
-Shader "Universal Render Pipeline/Unlit/PassthroughShadow" {
+Shader "Universal Render Pipeline/UnlitPassthroughShadow" {
     Properties {
         _MainTex ("Texture", 2D) = "white" {}
         _Alpha("Alpha", Float) = 0.5
