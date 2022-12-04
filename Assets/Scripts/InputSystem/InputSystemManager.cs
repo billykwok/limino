@@ -1,3 +1,4 @@
+using System;
 using NearMenu;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,9 +13,13 @@ namespace InputSystem {
         private OVRCameraRig _cameraRig;
         private OVRInputModule _inputModule;
 
-        private void Start() {
+        private void Awake() {
             _cameraRig = FindObjectOfType<OVRCameraRig>();
             _inputModule = FindObjectOfType<OVRInputModule>();
+        }
+
+        private void Start() {
+            nearMenuManager.Hide();
         }
 
         private void Update() {
@@ -27,11 +32,11 @@ namespace InputSystem {
 
         private void LateUpdate() {
             Vector3 controllerLocalPosition;
-            if (OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.LTouch)) {
+            if (OVRInput.GetUp(OVRInput.Button.Start, OVRInput.Controller.LTouch)) {
                 controllerLocalPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) +
                                           OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) *
                                           NEAR_MENU_OFFSET;
-            } else if (OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch)) {
+            } else if (OVRInput.GetUp(OVRInput.Button.Start, OVRInput.Controller.RTouch)) {
                 controllerLocalPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) +
                                           OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) *
                                           NEAR_MENU_OFFSET;

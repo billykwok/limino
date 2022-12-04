@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PassthroughStrokes {
     public class PassthroughStrokesManager : MonoBehaviour {
@@ -7,10 +6,16 @@ namespace PassthroughStrokes {
         private GameObject _leftBrush;
         private GameObject _rightBrush;
 
-        private void Start() {
+        private void Awake() {
             _camera = Camera.main;
-            _leftBrush = transform.Find("LeftBrush").gameObject;
-            _rightBrush = transform.Find("RightBrush").gameObject;
+            _leftBrush = Utilities.FindChildByName(transform, "LeftBrush");
+            _rightBrush = Utilities.FindChildByName(transform, "RightBrush");
+        }
+
+        private void Start() {
+            gameObject.SetActive(false);
+            _leftBrush.SetActive(false);
+            _rightBrush.SetActive(false);
         }
 
         private void Update() {
