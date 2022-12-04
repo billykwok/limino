@@ -5,12 +5,16 @@ namespace PassthroughShadow {
         public GameObject lightVolume;
         public Light spotlight;
         public GameObject bulbGlow;
+        private Camera _camera;
+
+        private void Awake() {
+            _camera = Camera.main;
+        }
 
         private void LateUpdate() {
-            // ensure all the light volume quads are camera-facing
             for (var i = 0; i < lightVolume.transform.childCount; i++) {
                 lightVolume.transform.GetChild(i).rotation = Quaternion.LookRotation(
-                    (lightVolume.transform.GetChild(i).position - Camera.main.transform.position).normalized
+                    (lightVolume.transform.GetChild(i).position - _camera.transform.position).normalized
                 );
             }
         }
@@ -21,10 +25,10 @@ namespace PassthroughShadow {
             bulbGlow.SetActive(lightVolume.activeSelf);
         }
 
-        public void EnableFlashlight(bool doEnable) {
-            lightVolume.SetActive(doEnable);
-            spotlight.enabled = doEnable;
-            bulbGlow.SetActive(doEnable);
+        public void DisableFlashlight() {
+            lightVolume.SetActive(false);
+            spotlight.enabled = false;
+            bulbGlow.SetActive(false);
         }
     }
 }

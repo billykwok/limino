@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/SceneManager/Scenes/VirtualFurniture.unity
     guid: 4977c9139e37ed74c8fc8f818aeb9515
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes/Lighting.unity
+    guid: b79c88b27037b4b48ab3fa45a63f208d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a41413b9a3bbf4aa78a9ad2ff5946309,
       type: 2}
