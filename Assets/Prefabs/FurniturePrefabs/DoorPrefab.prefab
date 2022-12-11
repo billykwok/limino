@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6399885256744025970}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,10 @@ GameObject:
   - component: {fileID: 3547350544786038103}
   - component: {fileID: 4217828072754753514}
   - component: {fileID: -4366189795075815668}
-  m_Layer: 0
+  - component: {fileID: 3961398773999892282}
+  - component: {fileID: 8504060943481352268}
+  - component: {fileID: 6864000225266378915}
+  m_Layer: 3
   m_Name: DoorPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,4 +142,56 @@ MonoBehaviour:
   paddingXMax: 0
   paddingYMax: 0
   paddingZMax: 0
-  _pivotTransform: {fileID: 0}
+  _pivotTransform: {fileID: 6399885256744025970}
+--- !u!65 &3961398773999892282
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856039737024118747}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5480073, y: 0.5430036, z: 0.15656723}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8504060943481352268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856039737024118747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa9ee7752754fb8853574bb1147e97f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rayExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6864000225266378915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856039737024118747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ae08d96d244b3395f735937467784a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passthroughMaterial: {fileID: 2100000, guid: ab5aa292dcc49487a94724b7fe6a96b4, type: 2}

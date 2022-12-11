@@ -4,47 +4,55 @@ using ObjectFading;
 using PassthroughShapes;
 using PassthroughStrokes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EditMode {
     public class EditModeManager : MonoBehaviour {
-        [SerializeField] private PassthroughStrokesManager _passthroughStrokesManager;
-        [SerializeField] private PassthroughShapesManager _passthroughShapesManager;
-        [SerializeField] private ObjectFadingManager _objectFadingManager;
-        [SerializeField] private GlobalFadingManager _globalFadingManager;
+        [FormerlySerializedAs("_passthroughStrokesManager")] [SerializeField]
+        private PassthroughStrokesTool passthroughStrokesTool;
+
+        [FormerlySerializedAs("_passthroughShapesManager")] [SerializeField]
+        private PassthroughShapesTool passthroughShapesTool;
+
+        [FormerlySerializedAs("_objectFadingManager")] [SerializeField]
+        private ObjectFadingTool objectFadingTool;
+
+        [FormerlySerializedAs("_globalFadingManager")] [SerializeField]
+        private GlobalFadingTool globalFadingTool;
 
         private void Start() {
-            _passthroughStrokesManager.gameObject.SetActive(false);
-            _passthroughShapesManager.gameObject.SetActive(false);
-            _objectFadingManager.gameObject.SetActive(false);
-            _globalFadingManager.gameObject.SetActive(false);
+            passthroughStrokesTool.gameObject.SetActive(false);
+            passthroughShapesTool.gameObject.SetActive(false);
+            objectFadingTool.onDeactivate();
+            globalFadingTool.gameObject.SetActive(false);
         }
 
         public void ActivatePassthroughStrokes() {
-            _passthroughStrokesManager.gameObject.SetActive(true);
-            _passthroughShapesManager.gameObject.SetActive(false);
-            _objectFadingManager.gameObject.SetActive(false);
-            _globalFadingManager.gameObject.SetActive(false);
+            passthroughStrokesTool.gameObject.SetActive(true);
+            passthroughShapesTool.gameObject.SetActive(false);
+            objectFadingTool.onDeactivate();
+            globalFadingTool.gameObject.SetActive(false);
         }
 
         public void ActivatePassthroughShapes() {
-            _passthroughStrokesManager.gameObject.SetActive(false);
-            _passthroughShapesManager.gameObject.SetActive(true);
-            _objectFadingManager.gameObject.SetActive(false);
-            _globalFadingManager.gameObject.SetActive(false);
+            passthroughStrokesTool.gameObject.SetActive(false);
+            passthroughShapesTool.gameObject.SetActive(true);
+            objectFadingTool.onDeactivate();
+            globalFadingTool.gameObject.SetActive(false);
         }
 
         public void ActivateObjectFading() {
-            _passthroughStrokesManager.gameObject.SetActive(false);
-            _passthroughShapesManager.gameObject.SetActive(false);
-            _objectFadingManager.gameObject.SetActive(true);
-            _globalFadingManager.gameObject.SetActive(false);
+            passthroughStrokesTool.gameObject.SetActive(false);
+            passthroughShapesTool.gameObject.SetActive(false);
+            objectFadingTool.onActivate();
+            globalFadingTool.gameObject.SetActive(false);
         }
 
         public void ActivateGlobalFading() {
-            _passthroughStrokesManager.gameObject.SetActive(false);
-            _passthroughShapesManager.gameObject.SetActive(false);
-            _objectFadingManager.gameObject.SetActive(false);
-            _globalFadingManager.gameObject.SetActive(true);
+            passthroughStrokesTool.gameObject.SetActive(false);
+            passthroughShapesTool.gameObject.SetActive(false);
+            objectFadingTool.onDeactivate();
+            globalFadingTool.gameObject.SetActive(true);
         }
     }
 }

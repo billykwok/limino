@@ -1,17 +1,17 @@
-using System;
 using NearMenu;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace InputSystem {
     public class InputSystemManager : MonoBehaviour {
         [SerializeField] private NearMenuManager nearMenuManager;
+        [SerializeField] private LineRenderer laser;
 
         private static readonly Vector3 NEAR_MENU_OFFSET = Vector3.forward * 0.4f;
 
         private OVRCameraRig _cameraRig;
         private OVRInputModule _inputModule;
+        private Vector3 _cursorPosition = Vector3.zero;
 
         private void Awake() {
             _cameraRig = FindObjectOfType<OVRCameraRig>();

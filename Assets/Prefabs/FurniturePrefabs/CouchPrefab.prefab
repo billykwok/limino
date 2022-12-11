@@ -12,7 +12,10 @@ GameObject:
   - component: {fileID: 6133690916591587001}
   - component: {fileID: 3976393341533294293}
   - component: {fileID: 4879192193862326089}
-  m_Layer: 0
+  - component: {fileID: 1892497216308375704}
+  - component: {fileID: 7951232961795151072}
+  - component: {fileID: -3851770566207402134}
+  m_Layer: 3
   m_Name: CouchPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,6 +111,58 @@ MonoBehaviour:
   paddingYMax: 0
   paddingZMax: 0
   _pivotTransform: {fileID: 3668873423922085879}
+--- !u!65 &1892497216308375704
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390179741997409651}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3213639, y: 0.35952783, z: 0.3236864}
+  m_Center: {x: 0, y: -0.000000014901161, z: 0}
+--- !u!114 &7951232961795151072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390179741997409651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa9ee7752754fb8853574bb1147e97f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rayExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-3851770566207402134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390179741997409651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ae08d96d244b3395f735937467784a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passthroughMaterial: {fileID: 2100000, guid: ab5aa292dcc49487a94724b7fe6a96b4, type: 2}
 --- !u!1 &770946504591400143
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3668873423922085879}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

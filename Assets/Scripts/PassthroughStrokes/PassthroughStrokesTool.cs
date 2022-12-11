@@ -1,15 +1,16 @@
 using UnityEngine;
+using Utils;
 
 namespace PassthroughStrokes {
-    public class PassthroughStrokesManager : MonoBehaviour {
+    public class PassthroughStrokesTool : MonoBehaviour {
         private Camera _camera;
         private GameObject _leftBrush;
         private GameObject _rightBrush;
 
         private void Awake() {
             _camera = Camera.main;
-            _leftBrush = Utilities.FindChildByName(transform, "LeftBrush");
-            _rightBrush = Utilities.FindChildByName(transform, "RightBrush");
+            _leftBrush = transform.FindChildGameObjectByName("LeftBrush");
+            _rightBrush = transform.FindChildGameObjectByName("RightBrush");
         }
 
         private void Start() {

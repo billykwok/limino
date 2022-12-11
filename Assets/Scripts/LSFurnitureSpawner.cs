@@ -6,25 +6,30 @@ using UnityEngine;
 [DefaultExecutionOrder(30)]
 public class LSFurnitureSpawner : MonoBehaviour {
     private static readonly LSResizer resizer = new();
+
     private static readonly IReadOnlyList<string> volumeFromTopPlane = new List<string> {
         OVRSceneManager.Classification.Desk,
         OVRSceneManager.Classification.Couch
     };
+
     private static readonly IReadOnlyList<string> planeOnly = new List<string> {
         OVRSceneManager.Classification.WallFace,
         OVRSceneManager.Classification.Ceiling,
         OVRSceneManager.Classification.Floor
     };
 
-    public List<LSSpawnable> spawnables;
+    [SerializeField] private GameObject roomLightPrefab;
+    [SerializeField] private List<LSSpawnable> spawnables;
 
     private OVRSemanticClassification _classification;
+    private static GameObject _roomLightRef;
     private int _frameCounter;
     private OVRSceneAnchor _sceneAnchor;
 
     private void Start() {
         _sceneAnchor = GetComponent<OVRSceneAnchor>();
         _classification = GetComponent<OVRSemanticClassification>();
+        AddRoomLight();
         SpawnSpawnable();
     }
 
@@ -37,17 +42,11 @@ public class LSFurnitureSpawner : MonoBehaviour {
         var clonedTransform = transform;
         var position = clonedTransform.position;
         var rotation = clonedTransform.rotation;
-        Debug.Log("Classification: " + string.Join("",
-            _classification.Labels
-                .Select(i => i.ToString())
-                .ToArray()));
 
         var volume = _sceneAnchor.GetComponent<OVRSceneVolume>();
-        Debug.Log("Volume: " + volume);
         var dimensions = volume ? volume.Dimensions : Vector3.one;
 
         var plane = _sceneAnchor.GetComponent<OVRScenePlane>();
-        Debug.Log("Plane: " + plane);
 
         if (_classification && plane) {
             dimensions = plane.Dimensions;
@@ -101,6 +100,14 @@ public class LSFurnitureSpawner : MonoBehaviour {
         }
 
         return false;
+    }
+
+    private void AddRoomLight() {
+        if (!roomLightPrefab) return;
+        if (_classification && _classification.Contains(OVRSceneManager.Classification.Ceiling) &&
+            !_roomLightRef) {
+            _roomLightRef = Instantiate(roomLightPrefab, _sceneAnchor.transform);
+        }
     }
 
     private static void GetVolumeFromTopPlane(

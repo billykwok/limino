@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 namespace NearMenu {
     public class NearMenuManager : MonoBehaviour {
@@ -14,14 +15,8 @@ namespace NearMenu {
         private Mode _mode = Mode.Main;
 
         private void Awake() {
-            _menusByMode.Add(
-                Mode.Main,
-                Utilities.FindChildByName(transform, "MainMenuCanvas")
-            );
-            _menusByMode.Add(
-                Mode.Edit,
-                Utilities.FindChildByName(transform, "EditModeMenuCanvas")
-            );
+            _menusByMode.Add(Mode.Main, transform.FindChildGameObjectByName("MainMenuCanvas"));
+            _menusByMode.Add(Mode.Edit, transform.FindChildGameObjectByName("EditModeMenuCanvas"));
         }
 
         private void Start() {
