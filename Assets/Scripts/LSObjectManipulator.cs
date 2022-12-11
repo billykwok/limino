@@ -132,15 +132,23 @@ public class LSObjectManipulator : MonoBehaviour {
         demoObjects.transform.rotation = Quaternion.LookRotation(objFwd);
     }
 
-    void FindHoverObject(Vector3 controllerPos, Quaternion controllerRot) {
-        RaycastHit[] objectsHit = Physics.RaycastAll(controllerPos, controllerRot * Vector3.forward);
-        float closestObject = Mathf.Infinity;
-        float rayDistance = 2.0f;
-        bool showLaser = true;
-        Vector3 labelPosition = Vector3.zero;
-        foreach (RaycastHit hit in objectsHit) {
-            float thisHitDistance = Vector3.Distance(hit.point, controllerPos);
-            if (thisHitDistance < closestObject) {
+    private void FindHoverObject(Vector3 controllerPos, Quaternion controllerRot) {
+        RaycastHit[] objectsHit = { };
+        var size = Physics.RaycastNonAlloc(controllerPos, controllerRot * Vector3.forward, objectsHit);
+        var closestObject = Mathf.Infinity;
+        var rayDistance = 2.0f;
+        var showLaser = true;
+        var labelPosition = Vector3.zero;
+
+        if (size == 0) {
+            hoverObject = null;
+        } else {
+            foreach (var hit in objectsHit) {
+                var thisHitDistance = Vector3.Distance(hit.point, controllerPos);
+                if (thisHitDistance >= closestObject) {
+                    continue;
+                }
+
                 hoverObject = hit.collider.gameObject;
                 closestObject = thisHitDistance;
                 rayDistance = grabObject ? thisHitDistance : thisHitDistance - 0.1f;
@@ -148,12 +156,9 @@ public class LSObjectManipulator : MonoBehaviour {
             }
         }
 
-        if (objectsHit.Length == 0) {
-            hoverObject = null;
-        }
-
         // if intersecting with an object, grab it
-        Collider[] hitColliders = Physics.OverlapSphere(controllerPos, 0.05f);
+        Collider[] hitColliders = { };
+        Physics.OverlapSphereNonAlloc(controllerPos, 0.05f, hitColliders);
         foreach (var hitCollider in hitColliders) {
             // use the last object, if there are multiple hits.
             // If objects overlap, this would require improvements.
@@ -164,23 +169,25 @@ public class LSObjectManipulator : MonoBehaviour {
         }
 
         if (objectInfo && objectInstructionsLabel) {
-            bool showObjectInfo = hoverObject || grabObject;
+            var showObjectInfo = hoverObject || grabObject;
             objectInfo.gameObject.SetActive(showObjectInfo);
-            Vector3 toObj = labelPosition - Camera.main.transform.position;
+            var toObj = labelPosition - Camera.main.transform.position;
             if (hoverObject && !grabObject) {
-                Vector3 targetPos = labelPosition - toObj.normalized * 0.05f;
+                var targetPos = labelPosition - toObj.normalized * 0.05f;
                 objectInfo.position = Vector3.Lerp(targetPos, objectInfo.position, grabTime);
                 objectInfo.rotation = Quaternion.LookRotation(toObj);
                 //objectInstructionsLabel.gameObject.SetActive(false);
-                objectInfo.localScale = Vector3.one * toObj.magnitude * 2.0f;
+                objectInfo.localScale = Vector3.one * (toObj.magnitude * 2.0f);
                 if (hoverObject.GetComponent<GrabObject>()) {
                     AssignInstructions(hoverObject.GetComponent<GrabObject>());
                 }
             } else if (grabObject) {
-                Vector3 targetPos = controllerPos + (Camera.main.transform.position - controllerPos).normalized * 0.1f;
-                objectInfo.position = Vector3.Lerp(objectInfo.position, targetPos, grabTime);
-                ;
-                objectInfo.rotation = Quaternion.LookRotation(objectInfo.position - Camera.main.transform.position);
+                var cameraPosition = Camera.main.transform.position;
+                var targetPos = controllerPos + (cameraPosition - controllerPos).normalized * 0.1f;
+                var position = objectInfo.position;
+                position = Vector3.Lerp(position, targetPos, grabTime);
+                objectInfo.position = position;
+                objectInfo.rotation = Quaternion.LookRotation(position - cameraPosition);
                 //objectInstructionsLabel.gameObject.SetActive(true);
                 objectInfo.localScale = Vector3.one;
                 if (grabObject.GetComponent<GrabObject>())
@@ -189,16 +196,18 @@ public class LSObjectManipulator : MonoBehaviour {
         }
 
         // show/hide laser pointer
-        if (laser) {
-            laser.positionCount = 2;
-            Vector3 pos1 = controllerPos + controllerRot * (Vector3.forward * 0.05f);
-            cursorPosition = controllerPos + controllerRot * (Vector3.forward * rayDistance);
-            laser.SetPosition(0, pos1);
-            laser.SetPosition(1, cursorPosition);
-            laser.enabled = (showLaser);
-            if (grabObject && grabObject.GetComponent<GrabObject>()) {
-                grabObject.GetComponent<GrabObject>().CursorPos(cursorPosition);
-            }
+        if (!laser) {
+            return;
+        }
+
+        laser.positionCount = 2;
+        var pos1 = controllerPos + controllerRot * (Vector3.forward * 0.05f);
+        cursorPosition = controllerPos + controllerRot * (Vector3.forward * rayDistance);
+        laser.SetPosition(0, pos1);
+        laser.SetPosition(1, cursorPosition);
+        laser.enabled = (showLaser);
+        if (grabObject && grabObject.GetComponent<GrabObject>()) {
+            grabObject.GetComponent<GrabObject>().CursorPos(cursorPosition);
         }
     }
 

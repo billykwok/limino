@@ -57,6 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4608d29186504d96ae5be56aeb5701bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomLightPrefab: {fileID: 4058753717224557943, guid: d5b353c4c9ee477cb074f3f67d32b02c,
+    type: 3}
   spawnables:
   - resizable: {fileID: 0}
     classificationLabel: FLOOR
@@ -64,8 +66,7 @@ MonoBehaviour:
   - resizable: {fileID: 0}
     classificationLabel: CEILING
     _editorClassificationIndex: 1
-  - resizable: {fileID: 3073511265374249805, guid: fcb0a381737b497a828e8994ddc157d7,
-      type: 3}
+  - resizable: {fileID: 0}
     classificationLabel: WALL_FACE
     _editorClassificationIndex: 2
   - resizable: {fileID: 4853920284852025031, guid: 55427582ab7664aacbb72370423da0fa,

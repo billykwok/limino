@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes/Lighting.unity
     guid: b79c88b27037b4b48ab3fa45a63f208d
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes/SurfaceProjectedPassthrough.unity
+    guid: e36011c54ca6d994c94449356fa5cee6
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a41413b9a3bbf4aa78a9ad2ff5946309,
       type: 2}

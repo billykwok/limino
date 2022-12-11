@@ -1,24 +1,21 @@
 using UnityEngine;
 
 namespace PassthroughShadow {
-    public class PassthroughShadowManager : MonoBehaviour {
+    public class PassthroughShadowTool : MonoBehaviour {
         private enum Mode {
             Hand,
             Head
         }
 
-        public Light sceneLight;
         public Transform flashlightRoot;
 
         private OVRCameraRig _cameraRig;
         private Vector3 _localPosition = Vector3.zero;
         private Quaternion _localRotation = Quaternion.identity;
         private Mode _mode = Mode.Hand;
-        private Flashlight _flashLight;
 
         private void Awake() {
             _cameraRig = FindObjectOfType<OVRCameraRig>();
-            _flashLight = GetComponent<Flashlight>();
         }
 
         private void Start() {

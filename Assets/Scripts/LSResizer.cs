@@ -8,17 +8,23 @@ public class LSResizer {
         prefab.name = sourcePrefab.name;
 
         var resizable = prefab.GetComponent<LSResizable>();
-        resizable.newSize = newSize;
-        if (resizable == null) {
+        if (resizable is null) {
             Debug.LogError("Resizable component missing.");
             return;
         }
+
+        resizable.newSize = newSize;
 
         var resizedMesh = ProcessVertices(resizable, newSize);
 
         var mf = prefab.GetComponent<MeshFilter>();
         mf.sharedMesh = resizedMesh;
         mf.sharedMesh.RecalculateBounds();
+
+        var boxCollider = prefab.GetComponent<BoxCollider>();
+        if (boxCollider is not null) {
+            boxCollider.size = mf.sharedMesh.bounds.size;
+        }
 
         // child it after creation so the bounds math plays nicely
         prefab.transform.SetParent(parent.transform);

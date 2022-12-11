@@ -3,12 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RoomLight
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Blendable
   - Water
   - UI
   - 
