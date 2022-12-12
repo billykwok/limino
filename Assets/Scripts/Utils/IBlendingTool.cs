@@ -1,7 +1,7 @@
 namespace Utils {
     public interface IBlendingTool {
-        public void onActivate();
+        public void OnSelect();
 
-        public void onDeactivate();
+        public void OnDeselect();
     }
 }

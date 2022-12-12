@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PassthroughStrokes {
+namespace Piercing {
     public class Brush : MonoBehaviour {
         public OVRInput.Controller controllerHand = OVRInput.Controller.None;
         public GameObject lineSegmentPrefab;
-        public GameObject lineContainer;
+        public GameObject strokesContainer;
 
         private enum BrushState {
             Idle,
@@ -13,7 +13,8 @@ namespace PassthroughStrokes {
         }
 
         private const float MIN_INK_DIST = 0.01f;
-        private static readonly int lineLength = Shader.PropertyToID("_LineLength");
+        private static readonly int LINE_LENGTH = Shader.PropertyToID("_LineLength");
+
         private readonly List<Vector3> _inkPositions = new();
 
         private BrushState _brushStatus = BrushState.Idle;
@@ -50,7 +51,7 @@ namespace PassthroughStrokes {
                         _strokeLength = 0.0f;
                         _inkPositions.Clear();
                         _inkPositions.Add(tipPosition);
-                        newLine.transform.parent = lineContainer.transform;
+                        newLine.transform.parent = strokesContainer.transform;
                         _brushStatus = BrushState.Inking;
                     }
 
@@ -65,7 +66,7 @@ namespace PassthroughStrokes {
                         _currentLineSegment.SetPositions(_inkPositions.ToArray());
                         _strokeLength += segmentLength;
                         // passing the line length to the shader ensures that the tail/end fades are consistent width
-                        _currentLineSegment.material.SetFloat(lineLength, _strokeLength / _strokeWidth);
+                        _currentLineSegment.material.SetFloat(LINE_LENGTH, _strokeLength / _strokeWidth);
                     }
 
                     if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, controllerHand)) {
@@ -81,14 +82,14 @@ namespace PassthroughStrokes {
         }
 
         private void ClearAllLines() {
-            for (var i = 0; i < lineContainer.transform.childCount; i++) {
-                Destroy(lineContainer.transform.GetChild(i).gameObject);
+            for (var i = 0; i < strokesContainer.transform.childCount; i++) {
+                Destroy(strokesContainer.transform.GetChild(i).gameObject);
             }
         }
 
         private void UndoInkLine() {
-            if (lineContainer.transform.childCount >= 1) {
-                Destroy(lineContainer.transform.GetChild(lineContainer.transform.childCount - 1).gameObject);
+            if (strokesContainer.transform.childCount >= 1) {
+                Destroy(strokesContainer.transform.GetChild(strokesContainer.transform.childCount - 1).gameObject);
             }
         }
     }

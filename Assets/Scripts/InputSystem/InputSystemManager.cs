@@ -1,17 +1,16 @@
-using NearMenu;
+using Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace InputSystem {
     public class InputSystemManager : MonoBehaviour {
-        [SerializeField] private NearMenuManager nearMenuManager;
-        [SerializeField] private LineRenderer laser;
+        [FormerlySerializedAs("nearMenuManager")] [SerializeField] private MenuManager menuManager;
 
         private static readonly Vector3 NEAR_MENU_OFFSET = Vector3.forward * 0.4f;
 
         private OVRCameraRig _cameraRig;
         private OVRInputModule _inputModule;
-        private Vector3 _cursorPosition = Vector3.zero;
 
         private void Awake() {
             _cameraRig = FindObjectOfType<OVRCameraRig>();
@@ -19,7 +18,7 @@ namespace InputSystem {
         }
 
         private void Start() {
-            nearMenuManager.Hide();
+            menuManager.Hide();
         }
 
         private void Update() {
@@ -44,13 +43,13 @@ namespace InputSystem {
                 return;
             }
 
-            if (nearMenuManager.IsHidden()) {
-                nearMenuManager.Summon(
+            if (menuManager.IsHidden()) {
+                menuManager.Summon(
                     controllerLocalPosition,
                     _cameraRig.centerEyeAnchor.transform.position
                 );
             } else {
-                nearMenuManager.Hide();
+                menuManager.Hide();
             }
         }
     }

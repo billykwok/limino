@@ -32,6 +32,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes/SurfaceProjectedPassthrough.unity
     guid: e36011c54ca6d994c94449356fa5cee6
+  - enabled: 0
+    path: Assets/Scenes/Headmovement.unity
+    guid: 2f8f4a3247e1c4ca1a479af1b57015c6
+  - enabled: 0
+    path: Assets/Scenes/SurfaceProjected.unity
+    guid: 730a0a5b5e02340c58c4a0cc384f13d8
+  - enabled: 0
+    path: Assets/Scenes/Environment.unity
+    guid: 876a09d03bc894c38a0c45aa97aaba2e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a41413b9a3bbf4aa78a9ad2ff5946309,
       type: 2}

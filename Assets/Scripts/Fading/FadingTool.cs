@@ -1,18 +1,18 @@
 using UnityEngine;
 using Utils;
 
-namespace ObjectFading {
-    public class ObjectFadingTool : MonoBehaviour, IBlendingTool {
+namespace Fading {
+    public class FadingTool : MonoBehaviour, IBlendingTool {
         private Fadable[] _fadables;
 
-        public void onActivate() {
+        public void OnSelect() {
             _fadables = FindObjectsOfType<Fadable>(true);
             foreach (var fadable in _fadables) {
                 fadable.Unlock();
             }
         }
 
-        public void onDeactivate() {
+        public void OnDeselect() {
             _fadables = FindObjectsOfType<Fadable>(true);
             foreach (var fadable in _fadables) {
                 fadable.Lock();
