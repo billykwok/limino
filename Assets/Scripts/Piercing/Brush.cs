@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Piercing {
     public class Brush : MonoBehaviour {
-        public OVRInput.Controller controllerHand = OVRInput.Controller.None;
-        public GameObject lineSegmentPrefab;
-        public GameObject strokesContainer;
+        [SerializeField] private OVRInput.Controller controllerHand = OVRInput.Controller.None;
+        [SerializeField] private GameObject lineSegmentPrefab;
+        [SerializeField] private GameObject strokesContainer;
 
         private enum BrushState {
             Idle,
@@ -21,6 +21,7 @@ namespace Piercing {
         private LineRenderer _currentLineSegment;
         private float _strokeLength;
         private float _strokeWidth = 0.1f;
+        private float _localDistance;
         private Camera _camera;
 
         private void Start() {
@@ -35,7 +36,24 @@ namespace Piercing {
                 return;
             }
 
-            var tipPosition = transform.position;
+            var thumbstickXY = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, controllerHand);
+            var controllerRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+            _strokeWidth = thumbstickXY.x switch {
+                >= 0.25f => Mathf.Clamp(_strokeWidth + 0.01f, 0.1f, 0.5f),
+                <= -0.25f => Mathf.Clamp(_strokeWidth - 0.01f, 0.1f, 0.5f),
+                _ => _strokeWidth
+            };
+            var brushScale = _strokeWidth * 5;
+            transform.localScale = new Vector3(brushScale, brushScale, brushScale);
+            _localDistance = thumbstickXY.y switch {
+                >= 0.25f => Mathf.Clamp(_localDistance + 0.02f, 0.1f, 5f),
+                <= -0.25f => Mathf.Clamp(_localDistance - 0.02f, 0.1f, 5f),
+                _ => _localDistance
+            };
+
+            var tx = transform;
+            tx.localPosition += controllerRotation * (Vector3.forward * _localDistance);
+            var tipPosition = tx.position;
             switch (_brushStatus) {
                 case BrushState.Idle:
                     if (OVRInput.GetUp(OVRInput.Button.One, controllerHand)) {
@@ -47,7 +65,7 @@ namespace Piercing {
                         _currentLineSegment = newLine.GetComponent<LineRenderer>();
                         _currentLineSegment.positionCount = 1;
                         _currentLineSegment.SetPosition(0, tipPosition);
-                        _strokeWidth = _currentLineSegment.startWidth;
+                        _currentLineSegment.startWidth = _strokeWidth;
                         _strokeLength = 0.0f;
                         _inkPositions.Clear();
                         _inkPositions.Add(tipPosition);
@@ -66,7 +84,10 @@ namespace Piercing {
                         _currentLineSegment.SetPositions(_inkPositions.ToArray());
                         _strokeLength += segmentLength;
                         // passing the line length to the shader ensures that the tail/end fades are consistent width
-                        _currentLineSegment.material.SetFloat(LINE_LENGTH, _strokeLength / _strokeWidth);
+                        _currentLineSegment.material.SetFloat(
+                            LINE_LENGTH,
+                            _strokeLength / _strokeWidth
+                        );
                     }
 
                     if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, controllerHand)) {
