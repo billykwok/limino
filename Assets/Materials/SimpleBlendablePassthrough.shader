@@ -9,7 +9,7 @@
     [Enum(UnityEngine.Rendering.BlendOp)] _BlendOpAlpha("Blend Alpha", Float) = 3.0 //"Min"
 
     [MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
-    [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)
+    [MainColor] _BaseColor("Base Color", Color) = (0, 0, 0, 0)
 
     _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
     _SmoothnessSource("Smoothness Source", Float) = 0.0
@@ -20,7 +20,7 @@
     [HideInInspector] _SpecGlossMap("Specular Map", 2D) = "white" {}
     [HideInInspector] _SpecularHighlights("Specular Highlights", Float) = 1.0
 
-    [HideInInspector] _Cutoff("Alpha Clipping", Range(0.0, 1.0)) = 0.5
+    [HideInInspector] _Cutoff("Alpha Clipping", Range(0.0, 1.0)) = 0.0
 
     [HideInInspector] [HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
     [HideInInspector] [NoScaleOffset]_EmissionMap("Emission Map", 2D) = "white" {}
@@ -51,7 +51,6 @@
       Name "Passthrough"
 
       ZWrite Off
-      Cull[_Cull]
       ZTest[_ZTest]
       BlendOp[_BlendOpColor], [_BlendOpAlpha]
       Blend Zero One, One One
@@ -397,7 +396,6 @@
       Name "Passthrough"
 
       ZWrite Off
-      Cull[_Cull]
       ZTest[_ZTest]
       BlendOp[_BlendOpColor], [_BlendOpAlpha]
       Blend Zero One, One One

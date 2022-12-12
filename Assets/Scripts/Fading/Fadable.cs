@@ -2,7 +2,7 @@ using System.Linq;
 using InputSystem;
 using UnityEngine;
 
-namespace ObjectFading {
+namespace Fading {
     [RequireComponent(typeof(BoxCollider), typeof(Raycastable), typeof(MeshRenderer))]
     public class Fadable : MonoBehaviour {
         private static readonly int PROPERTY_COLOR = Shader.PropertyToID("_BaseColor");
