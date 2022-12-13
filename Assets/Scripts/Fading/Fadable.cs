@@ -1,4 +1,5 @@
 using System.Linq;
+using InputSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -28,18 +29,14 @@ namespace Fading {
             _colors = _materials.Select(mat => mat.color).ToArray();
         }
 
-        private void LateUpdate() {
+        private void Update() {
             if (_isUnlocked && _isHovered) {
                 var thumbstickY = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).y;
                 _opacity = Mathf.Clamp(_opacity + thumbstickY * 0.05f, 0, 1);
-                OverrideOpacity(_opacity);
-            }
-        }
-
-        public void OverrideOpacity(float opacity) {
-            for (var i = 0; i < _materials.Length; ++i) {
-                _colors[i].a = opacity;
-                _materials[i].SetColor(PROPERTY_COLOR, _colors[i]);
+                for (var i = 0; i < _materials.Length; ++i) {
+                    _colors[i].a = _opacity;
+                    _materials[i].SetColor(PROPERTY_COLOR, _colors[i]);
+                }
             }
         }
 
