@@ -1,13 +1,13 @@
 using System.Linq;
 using InputSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Fading {
-    [RequireComponent(typeof(BoxCollider), typeof(Raycastable), typeof(MeshRenderer))]
-    public class Fadable : MonoBehaviour {
+    [RequireComponent(typeof(BoxCollider), typeof(MeshRenderer))]
+    public class Fadable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
         private static readonly int PROPERTY_COLOR = Shader.PropertyToID("_BaseColor");
 
-        private Raycastable _raycastable;
         private MeshRenderer _meshRenderer;
         private bool _isUnlocked;
         private bool _isHovered;
@@ -24,15 +24,9 @@ namespace Fading {
         }
 
         private void Awake() {
-            _raycastable = GetComponent<Raycastable>();
             _meshRenderer = GetComponent<MeshRenderer>();
             _materials = _meshRenderer.materials;
             _colors = _materials.Select(mat => mat.color).ToArray();
-        }
-
-        private void OnEnable() {
-            _raycastable.AddRayEnterListener(OnRayEnter);
-            _raycastable.AddRayExitListener(OnRayExit);
         }
 
         private void Update() {
@@ -46,18 +40,13 @@ namespace Fading {
             }
         }
 
-        private void OnDisable() {
-            _raycastable.RemoveRayEnterListener(OnRayEnter);
-            _raycastable.RemoveRayExitListener(OnRayExit);
-        }
-
-        private void OnRayEnter() {
+        public void OnPointerEnter(PointerEventData pointerEventData) {
             if (_isUnlocked) {
                 _isHovered = true;
             }
         }
 
-        private void OnRayExit() {
+        public void OnPointerExit(PointerEventData pointerEventData) {
             if (_isUnlocked) {
                 _isHovered = false;
             }

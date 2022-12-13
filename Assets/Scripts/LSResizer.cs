@@ -23,7 +23,9 @@ public class LSResizer {
 
         var boxCollider = prefab.GetComponent<BoxCollider>();
         if (boxCollider is not null) {
-            boxCollider.size = mf.sharedMesh.bounds.size;
+            var sharedMesh = mf.sharedMesh;
+            boxCollider.size = sharedMesh.bounds.size;
+            boxCollider.center = sharedMesh.bounds.center;
         }
 
         // child it after creation so the bounds math plays nicely

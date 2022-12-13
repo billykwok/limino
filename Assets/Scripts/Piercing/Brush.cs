@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,11 @@ namespace Piercing {
         private float _strokeWidth = 0.1f;
         private float _localDistance;
         private Camera _camera;
+        private int _layerDefault;
+
+        private void Awake() {
+            _layerDefault = LayerMask.NameToLayer("Default");
+        }
 
         private void Start() {
             _camera = Camera.main;
@@ -62,6 +68,7 @@ namespace Piercing {
 
                     if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, controllerHand)) {
                         var newLine = Instantiate(lineSegmentPrefab, tipPosition, Quaternion.identity);
+                        newLine.layer = _layerDefault;
                         _currentLineSegment = newLine.GetComponent<LineRenderer>();
                         _currentLineSegment.positionCount = 1;
                         _currentLineSegment.SetPosition(0, tipPosition);

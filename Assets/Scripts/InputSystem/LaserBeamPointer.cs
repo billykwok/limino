@@ -22,7 +22,6 @@ namespace InputSystem {
         private Vector3 _endPoint;
         private LineRenderer _lineRenderer;
         private GameObject _lastHitObject;
-        private Raycastable _raycastableOnHover;
         private bool _hitTarget;
         private bool _restoreOnInputAcquired;
 
@@ -131,32 +130,7 @@ namespace InputSystem {
                 }
             }
 
-            if (GameObjects.Equals(currentlyHitObject, _lastHitObject)) {
-                if (_raycastableOnHover is null) {
-                    OnRayEnter(currentlyHitObject);
-                }
-
-                return;
-            }
-
-            if (_raycastableOnHover is not null && !_raycastableOnHover.IsDestroyed()) {
-                _raycastableOnHover.OnRayExit();
-                _raycastableOnHover = null;
-            }
-
-            OnRayEnter(currentlyHitObject);
-
             _lastHitObject = currentlyHitObject;
-        }
-
-        private void OnRayEnter(GameObject currentlyHitObject) {
-            if (currentlyHitObject is not null) {
-                var raycastable = currentlyHitObject.GetComponent<Raycastable>();
-                if (raycastable is not null) {
-                    raycastable.OnRayEnter();
-                    _raycastableOnHover = raycastable;
-                }
-            }
         }
 
         private void OnInputFocusLost() {
