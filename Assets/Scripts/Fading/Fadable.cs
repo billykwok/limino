@@ -1,18 +1,16 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Fading {
     [RequireComponent(typeof(BoxCollider), typeof(MeshRenderer))]
     public class Fadable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-        private static readonly int PROPERTY_COLOR = Shader.PropertyToID("_BaseColor");
+        private static readonly int PROPERTY_OPACITY = Shader.PropertyToID("_InvertedAlpha");
 
         private MeshRenderer _meshRenderer;
         private bool _isUnlocked;
         private bool _isHovered;
         private float _opacity = 1.0f;
         private Material[] _materials;
-        private Color[] _colors;
 
         public void Lock() {
             _isUnlocked = false;
@@ -25,7 +23,6 @@ namespace Fading {
         private void Awake() {
             _meshRenderer = GetComponent<MeshRenderer>();
             _materials = _meshRenderer.materials;
-            _colors = _materials.Select(mat => mat.color).ToArray();
         }
 
         private void LateUpdate() {
@@ -37,9 +34,8 @@ namespace Fading {
         }
 
         public void OverrideOpacity(float opacity) {
-            for (var i = 0; i < _materials.Length; ++i) {
-                _colors[i].a = opacity;
-                _materials[i].SetColor(PROPERTY_COLOR, _colors[i]);
+            foreach (var material in _materials) {
+                material.SetFloat(PROPERTY_OPACITY, opacity);
             }
         }
 
