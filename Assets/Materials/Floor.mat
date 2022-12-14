@@ -21,14 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor
-  m_Shader: {fileID: 4800000, guid: 77fb3e48839744ffb91cf59e6fa4cbda, type: 3}
+  m_Shader: {fileID: 4800000, guid: cb386779107c4aa882f05e53de59e8ce, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _SPECULAR_COLOR
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
