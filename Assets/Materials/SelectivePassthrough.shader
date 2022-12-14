@@ -53,7 +53,9 @@
       }
 
       half4 frag(v2f i) : SV_Target {
-        return float4(0, 0, 0, 0);
+        half4 col = tex2D(_MainTex, i.uv);
+        float alpha = lerp(col.r, 1 - col.r, _InvertedAlpha);
+        return float4(0, 0, 0, alpha);
       }
       ENDHLSL
     }
