@@ -33,7 +33,7 @@ namespace Menu {
 
         private void OnButtonBackClick() {
             editModeManager.DisableAll();
-            menuManager.SwitchMode(MenuManager.Mode.Play);
+            menuManager.SwitchMode(MenuManager.MenuType.Play);
         }
 
         private void OnButtonStrokesClick() {
