@@ -21,8 +21,6 @@ namespace InputSystem {
         private Vector3 _forward;
         private Vector3 _endPoint;
         private LineRenderer _lineRenderer;
-        private GameObject _lastHitObject;
-        private Raycastable _raycastableOnHover;
         private bool _hitTarget;
         private bool _restoreOnInputAcquired;
 
@@ -53,23 +51,27 @@ namespace InputSystem {
         }
 
         private void LateUpdate() {
-            var controllerPos = OVRInput.GetLocalControllerPosition(CONTROLLER);
-            var controllerRot = OVRInput.GetLocalControllerRotation(CONTROLLER);
-            UpdateHoverObject(controllerPos, controllerRot);
-            _lineRenderer.SetPosition(0, _startPoint);
-            if (_hitTarget) {
-                _lineRenderer.SetPosition(1, _endPoint);
-                UpdateLaserBeam(_startPoint, _endPoint);
-                if (_cursorVisual) {
-                    _cursorVisual.transform.position = _endPoint;
-                    _cursorVisual.SetActive(true);
+            if (OVRInput.GetActiveController() is OVRInput.Controller.LTouch or OVRInput.Controller.RTouch
+                or OVRInput.Controller.Touch) {
+                _lineRenderer.SetPosition(0, _startPoint);
+                if (_hitTarget) {
+                    _lineRenderer.SetPosition(1, _endPoint);
+                    UpdateLaserBeam(_startPoint, _endPoint);
+                    if (_cursorVisual) {
+                        _cursorVisual.transform.position = _endPoint;
+                        _cursorVisual.SetActive(true);
+                    }
+                } else {
+                    UpdateLaserBeam(_startPoint, _startPoint + maxLength * _forward);
+                    _lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
+                    if (_cursorVisual) {
+                        _cursorVisual.SetActive(false);
+                    }
                 }
+
+                _lineRenderer.enabled = true;
             } else {
-                UpdateLaserBeam(_startPoint, _startPoint + maxLength * _forward);
-                _lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
-                if (_cursorVisual) {
-                    _cursorVisual.SetActive(false);
-                }
+                _lineRenderer.enabled = false;
             }
         }
 
@@ -108,53 +110,6 @@ namespace InputSystem {
                     }
 
                     break;
-                }
-            }
-        }
-
-        private void UpdateHoverObject(Vector3 position, Quaternion rotation) {
-            var objectHitCount = Physics.RaycastNonAlloc(
-                position,
-                rotation * Vector3.forward,
-                _raycastBuffer
-            );
-
-            var closestDistance = Mathf.Infinity;
-            GameObject currentlyHitObject = null;
-
-            for (var i = 0; i < objectHitCount; ++i) {
-                var hit = _raycastBuffer[i];
-                var hitDistance = Vector3.Distance(hit.point, position);
-                if (hitDistance < closestDistance) {
-                    closestDistance = hitDistance;
-                    currentlyHitObject = hit.transform.gameObject;
-                }
-            }
-
-            if (GameObjects.Equals(currentlyHitObject, _lastHitObject)) {
-                if (_raycastableOnHover is null) {
-                    OnRayEnter(currentlyHitObject);
-                }
-
-                return;
-            }
-
-            if (_raycastableOnHover is not null && !_raycastableOnHover.IsDestroyed()) {
-                _raycastableOnHover.OnRayExit();
-                _raycastableOnHover = null;
-            }
-
-            OnRayEnter(currentlyHitObject);
-
-            _lastHitObject = currentlyHitObject;
-        }
-
-        private void OnRayEnter(GameObject currentlyHitObject) {
-            if (currentlyHitObject is not null) {
-                var raycastable = currentlyHitObject.GetComponent<Raycastable>();
-                if (raycastable is not null) {
-                    raycastable.OnRayEnter();
-                    _raycastableOnHover = raycastable;
                 }
             }
         }

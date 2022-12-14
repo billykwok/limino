@@ -7,11 +7,13 @@ namespace Menu {
         [SerializeField] private MenuManager menuManager;
         [SerializeField] private PlayModeManager playModeManager;
         [SerializeField] private Button buttonEditMode;
+        [SerializeField] private Button buttonAutomation;
         [SerializeField] private Button buttonFlashlight;
         [SerializeField] private Button buttonHeadlight;
 
         public void Show() {
             buttonEditMode.onClick.AddListener(OnButtonEditModeClick);
+            buttonAutomation.onClick.AddListener(OnButtonAutomationClick);
             buttonFlashlight.onClick.AddListener(OnButtonFlashlightClick);
             buttonHeadlight.onClick.AddListener(OnButtonHeadlightClick);
             gameObject.SetActive(true);
@@ -30,11 +32,15 @@ namespace Menu {
 
         private void OnButtonEditModeClick() {
             playModeManager.DisableAll();
-            menuManager.SwitchMode(MenuManager.Mode.Edit);
+            menuManager.SwitchMode(MenuManager.MenuType.Edit);
+        }
+
+        private void OnButtonAutomationClick() {
+            playModeManager.DisableAll();
+            menuManager.SwitchMode(MenuManager.MenuType.Automation);
         }
 
         private void OnButtonFlashlightClick() {
-            Debug.Log("Flashlight clicked");
             playModeManager.ActivateFlashlightTool();
         }
 

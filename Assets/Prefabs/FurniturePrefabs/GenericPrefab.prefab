@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 854406862341039361}
   - component: {fileID: 6928517257735480407}
   - component: {fileID: 7269360513635308257}
-  - component: {fileID: 4990920451452325731}
   - component: {fileID: 5197154870876258286}
   m_Layer: 3
   m_Name: GenericPrefab
@@ -162,24 +161,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.19981508, y: 0.20272079, z: 0.2027091}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4990920451452325731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303299338288874185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fa9ee7752754fb8853574bb1147e97f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rayEnterEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  rayExitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5197154870876258286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,4 +173,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ae08d96d244b3395f735937467784a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passthroughMaterial: {fileID: 2100000, guid: ab5aa292dcc49487a94724b7fe6a96b4, type: 2}

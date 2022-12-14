@@ -4,17 +4,19 @@ using UnityEngine;
 
 namespace Menu {
     public class MenuManager : MonoBehaviour {
-        public enum Mode {
+        public enum MenuType {
             Play,
+            Automation,
             Edit
         }
 
-        private readonly Dictionary<Mode, IMenu> _menuManagersByMode = new();
-        private Mode _mode = Mode.Play;
+        private readonly Dictionary<MenuType, IMenu> _menuManagersByMode = new();
+        private MenuType _menuType = MenuType.Play;
 
         private void Awake() {
-            _menuManagersByMode.Add(Mode.Play, FindObjectOfType<PlayModeMenu>());
-            _menuManagersByMode.Add(Mode.Edit, FindObjectOfType<EditModeMenu>());
+            _menuManagersByMode.Add(MenuType.Play, FindObjectOfType<PlayModeMenu>());
+            _menuManagersByMode.Add(MenuType.Automation, FindObjectOfType<AutomationMenu>());
+            _menuManagersByMode.Add(MenuType.Edit, FindObjectOfType<EditModeMenu>());
         }
 
         private void Start() {
@@ -24,14 +26,14 @@ namespace Menu {
         }
 
         private void Update() {
-            var currentMenu = _menuManagersByMode.GetValueOrDefault(_mode);
+            var currentMenu = _menuManagersByMode.GetValueOrDefault(_menuType);
             if (currentMenu.IsShown()) {
                 return;
             }
 
             currentMenu.Show();
             foreach (var menu in from mode in _menuManagersByMode.Keys
-                     where mode != _mode
+                     where mode != _menuType
                      select _menuManagersByMode[mode]
                      into menu
                      where menu.IsShown()
@@ -53,8 +55,8 @@ namespace Menu {
             gameObject.SetActive(true);
         }
 
-        public void SwitchMode(Mode mode) {
-            _mode = mode;
+        public void SwitchMode(MenuType menuType) {
+            _menuType = menuType;
         }
     }
 }

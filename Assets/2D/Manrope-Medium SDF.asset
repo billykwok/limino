@@ -22,7 +22,8 @@ Texture2D:
   m_MipCount: 1
   m_IsReadable: 1
   m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
+  m_IgnoreMipmapLimit: 0
+  m_MipmapLimitGroupName: 
   m_StreamingMipmaps: 0
   m_StreamingMipmapsPriority: 0
   m_VTOnly: 0
@@ -182,6 +183,7 @@ MonoBehaviour:
     m_StyleName: Medium
     m_PointSize: 90
     m_Scale: 1
+    m_UnitsPerEM: 0
     m_LineHeight: 122.94
     m_AscentLine: 95.94
     m_CapLine: 65
@@ -408,6 +410,21 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 647
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 18
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 70
@@ -464,6 +481,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 110
     m_GlyphIndex: 251
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 32
+    m_GlyphIndex: 647
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: -1570260420397362637}
