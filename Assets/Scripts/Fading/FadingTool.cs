@@ -28,9 +28,17 @@ namespace Fading {
             }
         }
 
+        public void Lock() {
+        }
+
+        public void Unlock() {
+        }
+
         public void SwitchMode(Mode mode) {
             if (mode == Mode.Global && _mode == Mode.Object) {
                 OverrideGlobalOpacity(_globalOpacity);
+            } else if (mode == Mode.Object && _mode == Mode.Global) {
+                ResetObjectOpacity();
             }
 
             _mode = mode;
@@ -44,19 +52,28 @@ namespace Fading {
             }
         }
 
+        private void ResetObjectOpacity() {
+            _fadables = FindObjectsOfType<Fadable>(true);
+            foreach (var fadable in _fadables) {
+                fadable.ResetOpacity();
+                fadable.Unlock();
+            }
+        }
+
         public void OverrideDoorOpacity(float doorOpacity) {
             _fadables = FindObjectsOfType<Fadable>(true);
             foreach (var fadable in _fadables) {
-                if (fadable.CompareTag("Door")) {
+                if (fadable.GetClassification() == OVRSceneManager.Classification.DoorFrame) {
                     fadable.OverrideOpacity(doorOpacity);
                 }
             }
         }
 
-        private void Update() {
+        private void LateUpdate() {
             if (_mode == Mode.Global) {
                 var thumbstickY = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).y;
                 _globalOpacity += thumbstickY * 0.05f;
+                OverrideGlobalOpacity(_globalOpacity);
             }
         }
     }

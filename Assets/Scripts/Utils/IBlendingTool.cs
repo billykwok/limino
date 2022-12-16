@@ -3,5 +3,9 @@ namespace Utils {
         public void OnSelect();
 
         public void OnDeselect();
+
+        public void Lock();
+
+        public void Unlock();
     }
 }

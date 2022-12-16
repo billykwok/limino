@@ -6,7 +6,6 @@ namespace Menu {
     public class MenuManager : MonoBehaviour {
         public enum MenuType {
             Play,
-            Automation,
             Edit
         }
 
@@ -15,7 +14,6 @@ namespace Menu {
 
         private void Awake() {
             _menuManagersByMode.Add(MenuType.Play, FindObjectOfType<PlayModeMenu>());
-            _menuManagersByMode.Add(MenuType.Automation, FindObjectOfType<AutomationMenu>());
             _menuManagersByMode.Add(MenuType.Edit, FindObjectOfType<EditModeMenu>());
         }
 

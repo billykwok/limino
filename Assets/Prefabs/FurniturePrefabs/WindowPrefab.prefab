@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4487356122261360245}
   - component: {fileID: 5119068052687156349}
   - component: {fileID: 8441122964040182926}
-  - component: {fileID: 6435491914112600000}
-  - component: {fileID: 7960982915643488064}
+  - component: {fileID: 3259933841595930682}
+  - component: {fileID: 5669211041382682986}
   m_Layer: 3
   m_Name: WindowPrefab
   m_TagString: Untagged
@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923175471057630763}
-  m_Mesh: {fileID: 1049928748687988745, guid: 968bae71c018a45f59c9e2bd9b1df374, type: 3}
+  m_Mesh: {fileID: 8733429697405204941, guid: 968bae71c018a45f59c9e2bd9b1df374, type: 3}
 --- !u!23 &5119068052687156349
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -65,9 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a25c69288d049b88c91ecf1bd3098a2, type: 2}
-  - {fileID: 2100000, guid: 43b0da76b6094ee1be428319707ef786, type: 2}
-  - {fileID: 2100000, guid: a22ace91af714af5861c9d1f4bad7ffc, type: 2}
+  - {fileID: 2100000, guid: c5d7fcd66386e4680ad6dd4628fc379c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +109,7 @@ MonoBehaviour:
   paddingYMax: 0
   paddingZMax: 0
   _pivotTransform: {fileID: 805930218415294816}
---- !u!65 &6435491914112600000
+--- !u!65 &3259933841595930682
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,9 +128,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.30000365, y: 0.30000365, z: 0.0629797}
+  m_Size: {x: 0.19999999, y: 0.19999999, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7960982915643488064
+--- !u!114 &5669211041382682986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

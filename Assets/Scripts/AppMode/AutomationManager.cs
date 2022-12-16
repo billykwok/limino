@@ -15,7 +15,7 @@ namespace AppMode {
         private bool _isBreakTimeDetectionEnabled;
         private bool _isItemSearchingDetectionEnabled;
         private bool _isBystanderDetectionEnabled;
-        private int _doorOpacity = 1;
+        private int _doorOpacity = 0;
         private Vector3 _lastLeftHandPosition = Vector3.zero;
         private Vector3 _lastRightHandPosition = Vector3.zero;
         private float _lastLeftHandDistance = Mathf.Infinity;
@@ -49,18 +49,18 @@ namespace AppMode {
                 var leftDistance = Vector2.Distance(cameraHorizontalPosition, leftHandHorizontalPosition);
                 var rightDistance = Vector2.Distance(cameraHorizontalPosition, rightHandHorizontalPosition);
 
-                if ((leftDistance < 1f && leftDistance >= THRESHOLD_ITEM_SEARCHING &&
-                     leftHandPosition.z - _lastLeftHandPosition.z > 0.015f &&
+                if ((leftDistance < 2f && leftDistance >= THRESHOLD_ITEM_SEARCHING &&
+                     leftHandPosition.z - _lastLeftHandPosition.z < -0.015f &&
                      _lastLeftHandDistance < THRESHOLD_ITEM_SEARCHING) ||
-                    (rightDistance < 1f && rightDistance >= THRESHOLD_ITEM_SEARCHING &&
-                     rightHandPosition.z - _lastRightHandPosition.z > 0.015f &&
+                    (rightDistance < 2f && rightDistance >= THRESHOLD_ITEM_SEARCHING &&
+                     rightHandPosition.z - _lastRightHandPosition.z < -0.015f &&
                      _lastRightHandDistance < THRESHOLD_ITEM_SEARCHING)) {
                     headlightTool.OnSelect();
                 } else if ((leftDistance > 0 && leftDistance < THRESHOLD_ITEM_SEARCHING &&
-                            _lastLeftHandPosition.z - leftHandPosition.z > 0.015f &&
+                            _lastLeftHandPosition.z - leftHandPosition.z < -0.015f &&
                             _lastLeftHandDistance >= THRESHOLD_ITEM_SEARCHING) ||
                            (rightDistance > 0 && rightDistance < THRESHOLD_ITEM_SEARCHING &&
-                            _lastRightHandPosition.z - rightHandPosition.z > 0.015f &&
+                            _lastRightHandPosition.z - rightHandPosition.z < -0.015f &&
                             _lastRightHandDistance >= THRESHOLD_ITEM_SEARCHING)) {
                     headlightTool.OnDeselect();
                 }
@@ -74,7 +74,7 @@ namespace AppMode {
             if (_isBreakTimeDetectionEnabled) {
                 fadingTool.OverrideGlobalOpacity(
                     Math.Clamp(
-                        1 - (cameraPosition.y - THRESHOLD_BREAK_TIME) * 8,
+                        (cameraPosition.y - THRESHOLD_BREAK_TIME) * 8,
                         0,
                         1
                     )
