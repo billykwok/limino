@@ -14,6 +14,18 @@ namespace AppMode {
             fadingTool.OnDeselect();
         }
 
+        public void LockAll() {
+            passthroughStrokesTool.Lock();
+            passthroughShapesTool.Lock();
+            fadingTool.Lock();
+        }
+
+        public void UnlockAll() {
+            passthroughStrokesTool.Unlock();
+            passthroughShapesTool.Unlock();
+            fadingTool.Unlock();
+        }
+
         public void ActivateStrokesTool() {
             passthroughShapesTool.OnDeselect();
             fadingTool.OnDeselect();

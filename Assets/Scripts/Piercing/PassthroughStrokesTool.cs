@@ -40,5 +40,11 @@ namespace Piercing {
         public void OnDeselect() {
             gameObject.SetActive(false);
         }
+
+        public void Lock() {
+        }
+
+        public void Unlock() {
+        }
     }
 }

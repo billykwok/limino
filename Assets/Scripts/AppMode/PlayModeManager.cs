@@ -11,6 +11,12 @@ namespace AppMode {
             headlightTool.OnDeselect();
         }
 
+        public void LockAll() {
+        }
+
+        public void UnlockAll() {
+        }
+
         public void ActivateFlashlightTool() {
             headlightTool.OnDeselect();
             flashlightTool.OnSelect();

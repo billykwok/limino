@@ -1,9 +1,11 @@
 using System;
+using Fading;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class LSResizer {
-    public void CreateResizedObject(Vector3 newSize, GameObject parent, LSResizable sourcePrefab) {
+    public void CreateResizedObject(string classification, Vector3 newSize, GameObject parent,
+        LSResizable sourcePrefab) {
         var prefab = Object.Instantiate(sourcePrefab.gameObject, Vector3.zero, Quaternion.identity);
         prefab.name = sourcePrefab.name;
 
@@ -11,6 +13,11 @@ public class LSResizer {
         if (resizable is null) {
             Debug.LogError("Resizable component missing.");
             return;
+        }
+
+        var fadable = prefab.GetComponent<Fadable>();
+        if (fadable is not null) {
+            fadable.SetClassification(classification);
         }
 
         resizable.newSize = newSize;
@@ -24,7 +31,11 @@ public class LSResizer {
         var boxCollider = prefab.GetComponent<BoxCollider>();
         if (boxCollider is not null) {
             var sharedMesh = mf.sharedMesh;
-            boxCollider.size = sharedMesh.bounds.size;
+            var meshBoundSize = sharedMesh.bounds.size;
+            boxCollider.size = classification is OVRSceneManager.Classification.DoorFrame
+                or OVRSceneManager.Classification.WindowFrame
+                ? new Vector3(meshBoundSize.x, meshBoundSize.y, 0.025f)
+                : meshBoundSize;
             boxCollider.center = sharedMesh.bounds.center;
         }
 

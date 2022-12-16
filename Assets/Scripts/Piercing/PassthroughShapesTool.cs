@@ -14,6 +14,7 @@ namespace Piercing {
         private float _size = 1f;
         private float _distance = 0.5f;
         private int _layerDefault;
+        private bool _locked;
         private readonly List<MeshRenderer> _shapes = new();
 
         private void Awake() {
@@ -25,6 +26,14 @@ namespace Piercing {
 
         private void Start() {
             OnDeselect();
+        }
+
+        public void Lock() {
+            _locked = true;
+        }
+
+        public void Unlock() {
+            _locked = false;
         }
 
         private void LateUpdate() {
@@ -46,7 +55,13 @@ namespace Piercing {
                 OVRInput.GetLocalControllerPosition(CONTROLLING_HAND) + rotation * (Vector3.forward * _distance),
                 rotation * FACE_USER
             );
-            if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, CONTROLLING_HAND)) {
+            if (_shapes.Count > 0 && OVRInput.GetUp(OVRInput.Button.One, CONTROLLING_HAND)) {
+                var lastIndex = _shapes.Count - 1;
+                Destroy(_shapes[lastIndex]);
+                _shapes.RemoveAt(lastIndex);
+            }
+
+            if (!_locked && OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, CONTROLLING_HAND)) {
                 var meshRenderer = Instantiate(_quadOutline, container.transform, true);
                 meshRenderer.gameObject.layer = _layerDefault;
                 _shapes.Add(meshRenderer);

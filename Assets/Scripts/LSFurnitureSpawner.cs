@@ -75,6 +75,7 @@ public class LSFurnitureSpawner : MonoBehaviour {
         }
 
         resizer.CreateResizedObject(
+            _classification.Labels[0],
             dimensions,
             new GameObject("Root") {
                 transform = {

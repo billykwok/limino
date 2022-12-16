@@ -32,5 +32,11 @@ namespace Casting {
             torch.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
+
+        public void Lock() {
+        }
+
+        public void Unlock() {
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿Shader "MixedReality/TransparentPassthrough" {
   Properties {
-    _MainTex("Texture", 2D) = "white" {}
-    _Inflation("Inflation", float) = 0
-    _InvertedAlpha("Inverted Alpha", float) = 1
+    _InvertedAlpha("Inverted Alpha", float) = 0
 
     [Header(DepthTest)]
     [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 4 //"LessEqual"
@@ -40,23 +38,17 @@
         float4 vertex : SV_POSITION;
       };
 
-      sampler2D _MainTex;
-      float4 _MainTex_ST;
-      float _Inflation;
       float _InvertedAlpha;
 
       v2f vert(appdata v) {
         v2f o;
-        o.vertex = TransformObjectToHClip(v.vertex + v.normal * _Inflation);
-        // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+        o.vertex = TransformObjectToHClip(v.vertex);
         o.uv = v.uv;
         return o;
       }
 
       half4 frag(v2f i) : SV_Target {
-        half4 col = tex2D(_MainTex, i.uv);
-        float alpha = lerp(col.r, 1 - col.r, _InvertedAlpha);
-        return float4(0, 0, 0, alpha);
+        return half4(0, 0, 0, 1 - _InvertedAlpha);
       }
       ENDHLSL
     }
